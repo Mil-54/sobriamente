@@ -628,13 +628,14 @@ fun AchievementsSection(daysSober: Long) {
 fun TransformationSection() {
     val context = LocalContext.current
     val prefs = remember { context.getSharedPreferences("sobriety_prefs", Context.MODE_PRIVATE) }
-    
+
     var photo1Uri by remember { mutableStateOf(prefs.getString("photo1_uri", null)?.let { Uri.parse(it) }) }
     var photo2Uri by remember { mutableStateOf(prefs.getString("photo2_uri", null)?.let { Uri.parse(it) }) }
-    
+
     var currentPhotoTarget by remember { mutableStateOf(1) }
     var tempUri by remember { mutableStateOf<Uri?>(null) }
-    
+
+    // Launcher que toma la foto y guarda la URI al terminar
     val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         if (success && tempUri != null) {
             if (currentPhotoTarget == 1) {
@@ -647,13 +648,34 @@ fun TransformationSection() {
         }
     }
 
-    fun takePhoto(target: Int) {
+    // Función que crea el archivo temporal y lanza la cámara (llámala solo si el permiso está concedido)
+    fun launchCamera(target: Int) {
         currentPhotoTarget = target
-        val file = File(context.cacheDir, "images").apply { mkdirs() }
-        val newFile = File(file, "photo_${System.currentTimeMillis()}.jpg")
+        val dir = File(context.cacheDir, "images").apply { mkdirs() }
+        val newFile = File(dir, "photo_${System.currentTimeMillis()}.jpg")
         val uri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", newFile)
         tempUri = uri
         cameraLauncher.launch(uri)
+    }
+
+    // Launcher para solicitar el permiso de cámara en tiempo de ejecución
+    val permissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (granted) {
+            launchCamera(currentPhotoTarget)
+        } else {
+            Toast.makeText(context, "Se necesita permiso de cámara para subir fotos", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    // Función principal que verifica el permiso y actúa en consecuencia
+    fun takePhoto(target: Int) {
+        currentPhotoTarget = target
+        val permission = Manifest.permission.CAMERA
+        if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED) {
+            launchCamera(target)
+        } else {
+            permissionLauncher.launch(permission)
+        }
     }
 
     Column(modifier = Modifier.fillMaxWidth()) {
