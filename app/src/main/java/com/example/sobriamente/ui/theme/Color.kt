@@ -2,10 +2,11 @@ package com.example.sobriamente.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val PrimaryPurple = Color(0xFFBB86FC)
-val SecondaryGold = Color(0xFFFFD700)
-val DeepBackground = Color(0xFF121212)
-val SurfaceDark = Color(0xFF1E1E1E)
-val TextWhite = Color(0xFFE0E0E0)
-val TextGray = Color(0xFFA0A0A0)
-val ErrorRed = Color(0xFFCF6679)
+// Paleta de colores calmantes basada en psicología del color para recuperación
+val CalmBackground = Color(0xFF0F172A) // Slate 900 - Azul grisáceo muy oscuro y relajante
+val CalmSurface = Color(0xFF1E293B)    // Slate 800 - Superficies ligeramente más claras
+val CalmPrimary = Color(0xFF818CF8)    // Índigo Suave / Lavanda - Promueve sanación emocional y tranquilidad
+val CalmSecondary = Color(0xFF6EE7B7)  // Verde Menta Suave - Representa la naturaleza, renovación y equilibrio
+val CalmTextWhite = Color(0xFFF8FAFC)  // Blanco Cálido - Sensación de seguridad y apertura
+val CalmTextGray = Color(0xFF94A3B8)   // Slate 400 - Texto atenuado para reducir la carga cognitiva
+val CalmError = Color(0xFFF87171)      // Rojo suave y no invasivo para errores

@@ -15,17 +15,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-// Forzamos el tema oscuro por diseño (Sobriedad suele ser Dark Mode)
-private val DarkColorScheme = darkColorScheme(
-    primary = PrimaryPurple,
-    secondary = SecondaryGold,
-    background = DeepBackground,
-    surface = SurfaceDark,
-    onPrimary = DeepBackground,
-    onSecondary = DeepBackground,
-    onBackground = TextWhite,
-    onSurface = TextWhite,
-    error = ErrorRed
+// Usamos un tema oscuro con colores calmantes (Soft Blues, Muted Greens, Lavanda)
+private val CalmingDarkColorScheme = darkColorScheme(
+    primary = CalmPrimary,
+    secondary = CalmSecondary,
+    background = CalmBackground,
+    surface = CalmSurface,
+    surfaceVariant = CalmSurface,
+    onPrimary = CalmBackground,
+    onSecondary = CalmBackground,
+    onBackground = CalmTextWhite,
+    onSurface = CalmTextWhite,
+    onSurfaceVariant = CalmTextWhite,
+    error = CalmError
 )
 
 @Composable
@@ -35,7 +37,7 @@ fun SobriamenteTheme(
     dynamicColor: Boolean = false, // Lo ponemos en false para usar NUESTROS colores, no los del sistema
     content: @Composable () -> Unit
 ) {
-    val colorScheme = DarkColorScheme // Usamos siempre el oscuro para este diseño
+    val colorScheme = CalmingDarkColorScheme // Usamos siempre el oscuro calmante
 
     val view = LocalView.current
     if (!view.isInEditMode) {
