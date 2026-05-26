@@ -71,6 +71,9 @@ dependencies {
     // WorkManager
     implementation("androidx.work:work-runtime-ktx:2.9.1")
 
+    // AppCompat (requerido por el tema base en themes.xml)
+    implementation("androidx.appcompat:appcompat:1.7.0")
+
     // Coil para cargar imágenes
     implementation("io.coil-kt:coil-compose:2.6.0")
 
